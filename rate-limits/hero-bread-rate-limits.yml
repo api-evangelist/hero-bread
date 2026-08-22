@@ -1,0 +1,22 @@
+generated: '2026-08-22'
+method: searched
+source: https://shop.hero.co/llms.txt
+limit_count: 0
+note: >-
+  Hero Bread's storefront publishes that the agent endpoint is rate-limited but never states a
+  number, a window, a scope beyond "per IP", or any response header. An honest zero: the policy is
+  documented, the limit is not. Nothing was inferred and no header was invented — none were observed
+  on the 200 responses returned during probing.
+limits: []
+published_statement: 'Respect rate limits. The MCP endpoint is rate-limited per IP. Back off on 429 responses.'
+scope: per-ip
+window: not published
+limit: not published
+burst: not published
+exhaustion:
+  status: 429
+  source: https://shop.hero.co/llms.txt
+  headers: not published
+observed_headers: []
+observed_on:
+- {url: 'https://shop.hero.co/api/ucp/mcp', method: 'POST tools/list', http_status: 200, rate_limit_headers: none}

@@ -1,0 +1,46 @@
+generated: '2026-08-22'
+method: probed
+source: https://shop.hero.co/api/ucp/mcp
+format: jsonrpc2-error
+note: >-
+  Not RFC 9457 — the surface is MCP over JSON-RPC 2.0, so errors arrive as a JSON-RPC error object.
+  Every entry below was observed on the wire on 2026-08-22 against Hero Bread's own endpoint; no
+  error reference page is published, so nothing here is copied from documentation.
+envelope:
+  shape: '{"jsonrpc":"2.0","id":<n>,"error":{"code":<int>,"message":<string>,"data":<string|object>}}'
+  data_object_fields: [code, content, continue_url]
+problems:
+- code: -32000
+  message: AuthenticationRequired
+  title: A valid Shopify agent JWT is required for this tool call
+  detail: >-
+    "Unauthorized: A valid JWT is required to call <tool>. See
+    https://shopify.dev/docs/agents/get-started/authentication for instructions on generating a
+    token and authenticating your requests."
+  remediation: Obtain a Shopify agent token and send it as a bearer credential.
+  observed_on: 'tools/call name=nope_not_a_tool'
+  docs: https://shopify.dev/docs/agents/get-started/authentication
+- code: -32001
+  message: UCP discovery failed
+  data_code: invalid_profile_url
+  title: The request omitted a UCP agent profile URI
+  detail: 'Unable to fetch agent profile: Missing profile uri'
+  remediation: Send meta.ucp-agent.profile as a resolvable https URI on every tools/call.
+  observed_on: 'tools/call search_catalog with meta omitted; also resources/list and prompts/list'
+  continue_url: https://hero-foods.myshopify.com/
+- code: -32001
+  message: UCP discovery failed
+  data_code: profile_unreachable
+  title: The supplied UCP agent profile URI could not be fetched
+  detail: 'Unable to fetch agent profile: Http error'
+  remediation: Publish a fetchable agent profile document at the URI supplied in meta.ucp-agent.profile.
+  observed_on: 'tools/call get_checkout with an unresolvable profile URI'
+  continue_url: https://hero-foods.myshopify.com/
+runtime_notes:
+- >-
+  resources/list and prompts/list are advertised in the initialize capabilities but both fail the
+  same UCP discovery gate as tool calls, so the resource and prompt surfaces cannot be enumerated
+  anonymously.
+- >-
+  429 is documented as the rate-limit exhaustion status in the store's llms.txt but was not
+  triggered during probing.

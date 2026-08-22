@@ -1,0 +1,25 @@
+generated: '2026-08-22'
+method: searched
+source: https://www.hero.co/products
+plan_count: 0
+note: >-
+  Hero Bread sells food, not API access. There is no developer plan, no API pricing page, no free
+  tier and no metered rate card — the agent-commerce endpoint on shop.hero.co is open to any agent
+  that can present a UCP profile and a Shopify agent token, at no charge, because it exists to sell
+  the products. Consumer commercial surfaces are recorded below for completeness; they are product
+  pricing, not API plans, and are deliberately NOT modelled as tiers.
+plans: []
+consumer_commerce:
+  storefront: https://shop.hero.co
+  catalog: https://www.hero.co/products
+  subscriptions: https://www.hero.co/subscribe
+  prepaid_subscriptions: https://www.hero.co/prepaid-subscriptions
+  rewards: https://shop.hero.co/pages/rewards
+  retail_locator: https://www.hero.co/retail
+  currency_representation: integer minor units + ISO 4217 code (see conventions/)
+api_pricing:
+  published: false
+  free_to_call: true
+  basis: >-
+    Probed 2026-08-22 — the UCP discovery document, llms.txt, agents.md and robots.txt name no price,
+    quota or commercial term for agent access.

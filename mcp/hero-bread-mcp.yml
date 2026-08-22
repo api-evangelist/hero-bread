@@ -1,0 +1,112 @@
+generated: '2026-08-22'
+method: probed
+status: published
+source: https://shop.hero.co/api/ucp/mcp
+discovery_source: https://shop.hero.co/llms.txt
+ownership_note: >-
+  The MCP endpoint is served from shop.hero.co, Hero Bread's own storefront subdomain, and its UCP
+  merchant profile identifies this merchant specifically (merchant_name "Hero", merchant_origin
+  shop.hero.co, Shopify shop_id 56010965185). The protocol implementation is Shopify's platform
+  capability rather than software Hero Bread authored, but it is exposed on the company's own host
+  and transacts against the company's own catalog, cart, checkout and orders — the templated /
+  platform-hosted case described in the pipeline ownership rule.
+deployment:
+  mode: remote
+  endpoint: https://shop.hero.co/api/ucp/mcp
+  install: null
+  package: null
+  auth: none
+  verified: probed
+servers:
+- name: hero-bread-ucp
+  role: primary
+  endpoint: https://shop.hero.co/api/ucp/mcp
+  transport: streamable-http
+  protocol_version: '2025-06-18'
+  server_info:
+    name: universal-commerce
+    version: 0.1.0
+  capabilities:
+    tools: true
+    prompts: true
+    resources: true
+    logging: true
+  auth: none
+  tools_list_status: 200
+  tool_count: 13
+  raw: mcp/hero-bread-ucp-mcp-tools-list.json
+- name: hero-bread-storefront
+  role: legacy
+  endpoint: https://shop.hero.co/api/mcp
+  transport: streamable-http
+  note: >-
+    The older Shopify Storefront MCP surface, still live and unauthenticated alongside the UCP
+    endpoint. Narrower (5 tools) and read/cart only — no checkout or order tools.
+  auth: none
+  tools_list_status: 200
+  tool_count: 5
+  raw: mcp/hero-bread-storefront-mcp-tools-list.json
+tools:
+- name: search_catalog
+  category: catalog
+  server: hero-bread-ucp
+  description: Search Hero Bread products by natural-language query and/or filter criteria; paginated by cursor.
+- name: lookup_catalog
+  category: catalog
+  server: hero-bread-ucp
+  description: Resolve multiple product or variant identifiers (gid://shopify/Product/...) in one request.
+- name: get_product
+  category: catalog
+  server: hero-bread-ucp
+  description: Retrieve a single product with variants, exact pricing and real-time availability.
+- name: create_cart
+  category: cart
+  server: hero-bread-ucp
+  description: Create a new cart.
+- name: get_cart
+  category: cart
+  server: hero-bread-ucp
+  description: Read cart contents.
+- name: update_cart
+  category: cart
+  server: hero-bread-ucp
+  description: Apply updates to a cart.
+- name: cancel_cart
+  category: cart
+  server: hero-bread-ucp
+  description: Cancel a cart.
+- name: create_checkout
+  category: checkout
+  server: hero-bread-ucp
+  description: Create a checkout; returns line items, totals, discounts and taxes.
+- name: get_checkout
+  category: checkout
+  server: hero-bread-ucp
+  description: Read a checkout.
+- name: update_checkout
+  category: checkout
+  server: hero-bread-ucp
+  description: Update a checkout (shipping address, delivery method, payment instruments).
+- name: complete_checkout
+  category: checkout
+  server: hero-bread-ucp
+  description: Complete a checkout and return the order ID / thank-you-page URL. Requires meta.idempotency-key.
+  requires_idempotency_key: true
+- name: cancel_checkout
+  category: checkout
+  server: hero-bread-ucp
+  description: Cancel a checkout.
+- name: get_order
+  category: order
+  server: hero-bread-ucp
+  description: Read the details of an order.
+legacy_server_tools:
+- search_catalog
+- get_product_details
+- get_cart
+- update_cart
+- search_shop_policies_and_faqs
+x-evidence:
+- {url: 'https://shop.hero.co/api/ucp/mcp', method: 'POST tools/list', http_status: 200, tools: 13, fetched: '2026-08-22'}
+- {url: 'https://shop.hero.co/api/ucp/mcp', method: 'POST initialize', http_status: 200, fetched: '2026-08-22'}
+- {url: 'https://shop.hero.co/api/mcp', method: 'POST tools/list', http_status: 200, tools: 5, fetched: '2026-08-22'}

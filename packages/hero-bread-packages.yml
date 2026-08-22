@@ -1,0 +1,25 @@
+generated: '2026-08-22'
+method: searched
+source: registry searches, 2026-08-22
+package_count: 0
+official_count: 0
+note: >-
+  Hero Bread publishes no client libraries. npm registry search for "hero-bread", "herobread" and
+  "hero.co" returned no first-party package; PyPI, RubyGems and crates.io return 404 for
+  "hero-bread"; no GitHub organization exists (api.github.com/orgs/herobread and /orgs/hero-foods
+  both 404). This is expected — the agent surface is a hosted MCP endpoint reachable over plain
+  HTTP JSON-RPC, so there is nothing to install. An honest zero, not an unchecked gap; no SDKs
+  pointer is emitted.
+packages: []
+registries_checked:
+- {registry: npm, query: 'hero-bread / herobread / hero.co', result: no first-party match}
+- {registry: pypi, package: hero-bread, status: 404, version: null}
+- {registry: rubygems, package: hero-bread, status: 404, version: null}
+- {registry: crates.io, package: hero-bread, status: 404, version: null}
+- {registry: github, org: 'herobread, hero-foods', status: 404}
+third_party_client_paths:
+  note: >-
+    Not Hero Bread packages and deliberately not listed as such — recorded only so a reader knows
+    how an agent actually connects: any MCP client speaks to https://shop.hero.co/api/ucp/mcp
+    directly, and Shopify publishes a cross-store shopping skill at https://shop.app/SKILL.md that
+    the store's own llms.txt recommends.

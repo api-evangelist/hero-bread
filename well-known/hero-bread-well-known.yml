@@ -1,0 +1,69 @@
+generated: '2026-08-22'
+method: probed
+source: probe of every Hero Bread host, 2026-08-22
+note: >-
+  www.hero.co (the marketing site) serves a real 404 for every /.well-known/ path, including a
+  control path that does not exist — it is not a soft-404 catch-all, it genuinely publishes nothing
+  there. shop.hero.co (the Shopify-hosted storefront on Hero Bread's own subdomain) serves four real
+  documents: the UCP merchant profile plus the OAuth/OIDC discovery trio for Shopify customer
+  accounts. No security.txt and no api-catalog on any host.
+hit_count: 4
+hosts:
+- host: https://shop.hero.co
+  documents:
+  - path: /.well-known/ucp
+    status: 200
+    file: hero-bread-ucp.json
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: hero-bread-oauth-authorization-server.json
+  - path: /.well-known/openid-configuration
+    status: 200
+    file: hero-bread-openid-configuration.json
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    file: hero-bread-oauth-protected-resource.json
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://www.hero.co
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/ucp
+    status: 404
+- host: https://api.hero.co
+  note: resolves but every path returns HTTP 503 from an edge with no application behind it
+  documents:
+  - path: /.well-known/security.txt
+    status: 503
+  - path: /.well-known/agent-card.json
+    status: 503
+- host: https://developer.hero.co
+  note: does not resolve (DNS NXDOMAIN)
+  documents: []
+- host: https://docs.hero.co
+  note: does not resolve (DNS NXDOMAIN)
+  documents: []
+soft_404_control:
+  url: https://www.hero.co/.well-known/thisdoesnotexist-control
+  status: 404

@@ -1,0 +1,150 @@
+generated: '2026-08-22'
+method: derived
+source: mcp/hero-bread-ucp-mcp-tools-list.json
+note: >-
+  Hero Bread publishes no OpenAPI, so this crosswalk cannot bind tools to operationIds. What it can
+  bind — and what matters for an agent — is each tool to the UCP capability that defines its
+  contract, and to the two other surfaces the same commerce core projects through: the legacy
+  Shopify Storefront MCP endpoint and the public storefront JSON/HTML paths the store's llms.txt
+  documents. The divergences below are real and were all observed on the wire.
+surfaces:
+  openapi: null
+  graphql: null
+  ucp_mcp:
+    url: https://shop.hero.co/api/ucp/mcp
+    tools_list: 200 (anonymous)
+    tools_call: gated (requires meta.ucp-agent.profile + Shopify agent JWT)
+  storefront_mcp:
+    url: https://shop.hero.co/api/mcp
+    tools_list: 200 (anonymous)
+    tools: 5
+  storefront_http:
+    documented_at: https://shop.hero.co/llms.txt
+    paths:
+    - GET /products/{handle}.json
+    - GET /collections/{handle}/products.json
+    - GET /collections/all
+    - GET /search?q={query}&type=product
+    - GET /sitemap.xml
+    note: >-
+      robots.txt explicitly steers agents away from the AJAX surfaces (/cart.js,
+      /recommendations/products) and toward UCP/MCP for cart and checkout.
+crosswalk:
+- tool: search_catalog
+  category: catalog
+  ucp_capability: dev.ucp.shopping.catalog.search
+  storefront_mcp: search_catalog
+  http: 'GET /search?q={query}&type=product'
+  binding: capability
+  confidence: high
+- tool: lookup_catalog
+  category: catalog
+  ucp_capability: dev.ucp.shopping.catalog.lookup
+  storefront_mcp: null
+  http: 'GET /products/{handle}.json (one at a time)'
+  binding: capability
+  confidence: medium
+  note: Batch identifier resolution has no single-request HTTP equivalent.
+- tool: get_product
+  category: catalog
+  ucp_capability: dev.ucp.shopping.catalog.lookup
+  storefront_mcp: get_product_details
+  http: 'GET /products/{handle}.json'
+  binding: capability
+  confidence: high
+- tool: create_cart
+  category: cart
+  ucp_capability: dev.ucp.shopping.cart
+  storefront_mcp: update_cart
+  http: 'POST /cart/add.js (disallowed for agents by robots.txt)'
+  binding: capability
+  confidence: high
+- tool: get_cart
+  category: cart
+  ucp_capability: dev.ucp.shopping.cart
+  storefront_mcp: get_cart
+  http: 'GET /cart.js (disallowed for agents by robots.txt)'
+  binding: capability
+  confidence: high
+- tool: update_cart
+  category: cart
+  ucp_capability: dev.ucp.shopping.cart
+  storefront_mcp: update_cart
+  binding: capability
+  confidence: high
+- tool: cancel_cart
+  category: cart
+  ucp_capability: dev.ucp.shopping.cart
+  storefront_mcp: null
+  binding: capability
+  confidence: high
+- tool: create_checkout
+  category: checkout
+  ucp_capability: dev.ucp.shopping.checkout
+  storefront_mcp: null
+  binding: capability
+  confidence: high
+- tool: get_checkout
+  category: checkout
+  ucp_capability: dev.ucp.shopping.checkout
+  storefront_mcp: null
+  binding: capability
+  confidence: high
+- tool: update_checkout
+  category: checkout
+  ucp_capability: dev.ucp.shopping.fulfillment
+  storefront_mcp: null
+  binding: capability
+  confidence: medium
+  note: >-
+    Carries the fulfillment capability's config — allows_multi_destination.shipping false, and
+    allows_method_combinations [[shipping]].
+- tool: complete_checkout
+  category: checkout
+  ucp_capability: dev.ucp.shopping.checkout
+  storefront_mcp: null
+  binding: capability
+  confidence: high
+  note: Only tool requiring meta.idempotency-key; buyer approval mandated by the store's own rules.
+- tool: cancel_checkout
+  category: checkout
+  ucp_capability: dev.ucp.shopping.checkout
+  storefront_mcp: null
+  binding: capability
+  confidence: high
+- tool: get_order
+  category: order
+  ucp_capability: dev.ucp.shopping.order
+  storefront_mcp: null
+  http: 'https://www.hero.co/order-tracker (human page only)'
+  binding: capability
+  confidence: high
+mcp_only:
+- tool: create_checkout
+  reason: No public HTTP checkout surface; /checkout is Disallow in robots.txt.
+- tool: complete_checkout
+  reason: Payment completion is agent-gated by design and has no crawlable equivalent.
+- tool: cancel_checkout
+  reason: No public HTTP equivalent.
+- tool: cancel_cart
+  reason: No public HTTP equivalent.
+- tool: get_order
+  reason: Orders are Disallow in robots.txt; only a human order-tracker page exists.
+storefront_mcp_only:
+- tool: search_shop_policies_and_faqs
+  reason: >-
+    Exposed by the legacy /api/mcp server but absent from the 13-tool UCP surface. An agent that
+    only speaks UCP cannot query store policies as a tool and must read the policy pages directly.
+rest_only:
+- capability: sitemap and collection browsing
+  paths: [GET /sitemap.xml, GET /collections/all, 'GET /collections/{handle}/products.json']
+  reason: Bulk catalog crawling has no UCP tool; the store documents the HTTP paths for read-only agents.
+coverage:
+  tools_named: 13
+  tools_bound_to_ucp_capability: 13
+  tools_with_a_storefront_mcp_twin: 4
+  tools_with_a_public_http_equivalent: 4
+  mcp_only: 5
+  storefront_mcp_only: 1
+  rest_operations_total: null
+  note: rest_operations_total is null because there is no OpenAPI to count.

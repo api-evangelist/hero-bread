@@ -1,0 +1,111 @@
+generated: '2026-08-22'
+method: probed
+source: https://shop.hero.co/.well-known/ucp
+note: >-
+  Assertions below are read from documents Hero Bread's own hosts serve and from live probes of the
+  MCP endpoint. Nothing is claimed from a marketing page.
+standards:
+- id: mcp
+  name: Model Context Protocol
+  conforms: true
+  version: '2025-06-18'
+  evidence: >-
+    initialize on https://shop.hero.co/api/ucp/mcp returned protocolVersion 2025-06-18 and
+    serverInfo {name universal-commerce, version 0.1.0}; tools/list returned 13 tools with
+    JSON Schema 2020-12 inputSchemas.
+- id: jsonrpc-2.0
+  name: JSON-RPC 2.0
+  conforms: true
+  evidence: every response carries jsonrpc "2.0" with matching id; errors use the standard error object
+- id: json-schema-2020-12
+  name: JSON Schema draft 2020-12
+  conforms: true
+  evidence: 'every tool inputSchema declares $schema https://json-schema.org/draft/2020-12/schema'
+- id: oauth2
+  name: OAuth 2.0
+  conforms: true
+  evidence: /.well-known/oauth-authorization-server declares authorization_code + refresh_token with PKCE S256
+- id: rfc8414
+  name: OAuth 2.0 Authorization Server Metadata
+  conforms: true
+  evidence: served at https://shop.hero.co/.well-known/oauth-authorization-server (HTTP 200)
+- id: rfc9728
+  name: OAuth 2.0 Protected Resource Metadata
+  conforms: true
+  evidence: >-
+    https://shop.hero.co/.well-known/oauth-protected-resource returns resource https://shop.hero.co
+    with authorization_servers and bearer_methods_supported
+- id: oidc
+  name: OpenID Connect Discovery
+  conforms: true
+  evidence: /.well-known/openid-configuration served, RS256, jwks_uri present
+- id: llmstxt
+  name: llms.txt
+  conforms: true
+  evidence: https://shop.hero.co/llms.txt returns 200 with an agent-instruction document (4,268 bytes)
+- id: rfc9116
+  name: security.txt
+  conforms: false
+  evidence: '404 on /.well-known/security.txt on every host probed'
+- id: rfc9457
+  name: RFC 9457 Problem Details
+  conforms: false
+  evidence: errors are JSON-RPC 2.0 error objects, not application/problem+json
+- id: openapi
+  name: OpenAPI
+  conforms: false
+  evidence: 'no OpenAPI at any probed path on www.hero.co, shop.hero.co or api.hero.co'
+- id: a2a
+  name: A2A Agent Card
+  conforms: false
+  evidence: '404 on /.well-known/agent-card.json and /.well-known/agent.json on every host'
+domain_standards:
+- id: ucp
+  name: Universal Commerce Protocol
+  market: agent-driven retail commerce
+  conforms: true
+  version: '2026-04-08'
+  supported_versions: ['2026-04-08', '2026-01-23']
+  evidence: >-
+    https://shop.hero.co/.well-known/ucp (HTTP 200) declares services["dev.ucp.shopping"] with
+    transport mcp and endpoint /api/ucp/mcp, and capabilities dev.ucp.shopping.cart,
+    .checkout, .fulfillment, .discount, .order, .catalog.search, .catalog.lookup — each pinned to a
+    ucp.dev schema URI. The tool names observed on the wire (create_cart, create_checkout,
+    complete_checkout, search_catalog, lookup_catalog, get_order) are the UCP shopping-service
+    vocabulary, not bespoke names.
+  artifact: well-known/hero-bread-ucp.json
+  significance: >-
+    An agent that already speaks UCP transacts with this store with no bespoke connector. That is
+    the whole point of the domain-standard signature, and it is declared in the contract rather than
+    asserted in prose.
+- id: dev.shopify.catalog
+  name: Shopify Catalog UCP extension
+  market: agent-driven retail commerce
+  conforms: true
+  version: '2026-04-08'
+  evidence: >-
+    capabilities["dev.shopify.catalog"] extends dev.ucp.shopping.catalog.search and .catalog.lookup,
+    schema https://shopify.dev/ucp/schemas/2026-04-08/shopify_catalog.json
+- id: schema.org-product
+  name: schema.org Product
+  conforms: unknown
+  evidence: not evaluated — storefront product JSON is Shopify's native shape, not JSON-LD
+payment_handlers:
+- id: com.google.pay
+  version: '2026-01-11'
+  card_networks: [VISA, MASTERCARD, AMEX, DISCOVER]
+  auth_methods: [PAN_ONLY, CRYPTOGRAM_3DS]
+  source: well-known/hero-bread-ucp.json
+- id: dev.shopify.card
+  version: '2026-01-15'
+  card_brands: [visa, master, american_express, discover, diners_club]
+  source: well-known/hero-bread-ucp.json
+- id: dev.shopify.shop_pay
+  version: '2026-04-08'
+  source: well-known/hero-bread-ucp.json
+compliance_program:
+  published: false
+  note: >-
+    No trust center, no named certification (SOC 2 / ISO 27001 / PCI DSS), and no security or
+    compliance page on any Hero Bread host. Payment card handling is Shopify's, and Shopify's
+    compliance posture is not Hero Bread's to claim — so no Compliance pointer is emitted.

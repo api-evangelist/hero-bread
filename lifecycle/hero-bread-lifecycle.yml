@@ -1,0 +1,34 @@
+generated: '2026-08-22'
+method: probed
+source: https://shop.hero.co/.well-known/ucp
+versioning:
+  scheme: dated protocol version
+  current: '2026-04-08'
+  supported: ['2026-04-08', '2026-01-23']
+  negotiation: >-
+    The UCP discovery document lists a per-version profile URL for each supported version, so an
+    agent pins a version by fetching /.well-known/ucp/<version>.
+  mcp_protocol_version: '2025-06-18'
+  docs: https://shop.hero.co/.well-known/ucp
+deprecation:
+  policy_url: null
+  sunset_header: unknown
+  note: >-
+    No deprecation policy and no Sunset/Deprecation header contract is published on any Hero Bread
+    host. The only lifecycle signal is that a previous UCP version (2026-01-23) is still listed as
+    supported alongside the current one — an overlap, not a stated policy. No Deprecation pointer is
+    emitted.
+sla:
+  url: null
+  uptime_target: null
+status_page:
+  url: null
+  note: >-
+    Hero Bread operates no status page. The underlying platform's status page belongs to Shopify and
+    is not Hero Bread's to claim, so no StatusPage pointer is emitted.
+changelog:
+  url: null
+  note: No dated changelog for the storefront or the agent surface.
+deprecated_operations: []
+surface_history:
+  - {date: '2026-08-22', event: 'API Evangelist first observed the UCP/MCP surface live and unauthenticated at shop.hero.co'}

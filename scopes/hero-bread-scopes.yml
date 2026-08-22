@@ -1,0 +1,34 @@
+generated: '2026-08-22'
+method: probed
+source: https://shop.hero.co/.well-known/oauth-authorization-server
+note: >-
+  Scopes are read from the live RFC 8414 authorization-server metadata served on Hero Bread's own
+  storefront host. The authorization server itself is Shopify's customer-accounts issuer, scoped to
+  this merchant's shop id (56010965185). No OpenAPI declares these — the discovery document is the
+  only published source.
+schemes:
+- name: shopify-customer-accounts
+  issuer: https://shopify.com/authentication/56010965185
+  source: well-known/hero-bread-oauth-authorization-server.json
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://shopify.com/authentication/56010965185/oauth/authorize
+    tokenUrl: https://shopify.com/authentication/56010965185/oauth/token
+    pkce: S256
+scopes:
+- scope: openid
+  description: OpenID Connect authentication for the buyer.
+  flows: [authorizationCode]
+  sources: [well-known/hero-bread-oauth-authorization-server.json]
+- scope: email
+  description: Access to the buyer's email address claim.
+  flows: [authorizationCode]
+  sources: [well-known/hero-bread-oauth-authorization-server.json]
+- scope: customer-account-api:full
+  description: Full access to the customer account API for this store (orders, addresses, subscriptions).
+  flows: [authorizationCode]
+  sources: [well-known/hero-bread-oauth-authorization-server.json]
+- scope: customer-account-mcp-api:full
+  description: Full access to the customer-account MCP API for this store — the authenticated agent surface.
+  flows: [authorizationCode]
+  sources: [well-known/hero-bread-oauth-authorization-server.json]

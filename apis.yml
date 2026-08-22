@@ -1,18 +1,75 @@
 aid: hero-bread
 name: Hero Bread
-description: 'Hero Bread is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: >-
+  Hero Bread is an American food-technology company that makes low-net-carb, high-fiber, zero-sugar
+  baked goods — sliced breads, tortillas, buns, rolls and bagels — sold direct-to-consumer from
+  hero.co and through grocery and foodservice retail. It is not a developer-tools company and
+  publishes no developer portal, OpenAPI description or API documentation. It does, however, operate
+  a live agent-commerce surface on its own storefront subdomain: shop.hero.co serves an llms.txt and
+  an agents.md, a Universal Commerce Protocol (UCP) merchant profile at /.well-known/ucp, and an
+  unauthenticated MCP endpoint at /api/ucp/mcp exposing thirteen catalog, cart, checkout and order
+  tools — a Shopify platform capability exposed on the merchant's own host against the merchant's
+  own catalog.
+image: https://cdn.sanity.io/images/85daklna/production/028e6f6b81bdfad5074d500c93636f8f18866203-2000x1670.webp
 url: https://raw.githubusercontent.com/api-evangelist/hero-bread/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
+x-tier: profiled
+x-tier-reason: agent-commerce-surface
 specificationVersion: '0.20'
 created: '2026-08-22'
 modified: '2026-08-22'
 tags:
 - Company
-apis: []
+- Food and Beverage
+- Consumer Packaged Goods
+- Retail
+- E-Commerce
+- Agent Commerce
+- Model Context Protocol
+- Universal Commerce Protocol
+- Shopify
+- Direct to Consumer
+apis:
+- aid: hero-bread:hero-bread-ucp-mcp
+  name: Hero Bread Storefront Agent Commerce (UCP/MCP)
+  description: >-
+    The agent-facing commerce interface for the Hero Bread online store. An MCP server at
+    https://shop.hero.co/api/ucp/mcp implements the Universal Commerce Protocol shopping service
+    (dev.ucp.shopping) with thirteen tools spanning catalog search and lookup, cart create/read/
+    update/cancel, checkout create/read/update/complete/cancel, and order read. tools/list answers
+    anonymously; tools/call requires a resolvable UCP agent profile and, for transactional tools, a
+    Shopify agent JWT. complete_checkout requires an idempotency key and, per the store's own
+    published rules, explicit contemporaneous buyer approval before payment.
+  humanURL: https://shop.hero.co/agents.md
+  baseURL: https://shop.hero.co/api/ucp/mcp
+  tags:
+  - Agent Commerce
+  - Catalog
+  - Cart
+  - Checkout
+  - Orders
+  properties:
+  - type: Documentation
+    url: https://shop.hero.co/agents.md
+  - type: MCPServer
+    url: mcp/hero-bread-mcp.yml
+  - type: LLMsTxt
+    url: llms/hero-bread-llms.txt
+  - type: Authentication
+    url: authentication/hero-bread-authentication.yml
+  - type: OAuthScopes
+    url: scopes/hero-bread-scopes.yml
+  - type: Conventions
+    url: conventions/hero-bread-conventions.yml
+  - type: Idempotency
+    url: conventions/hero-bread-conventions.yml
+  - type: ErrorCatalog
+    url: errors/hero-bread-problem-types.yml
+  - type: DataModel
+    url: data-model/hero-bread-data-model.yml
+  - type: Conformance
+    url: conformance/hero-bread-conformance.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -20,4 +77,74 @@ maintainers:
   email: info@apis.io
 common:
 - type: Website
-  url: https://www.nasdaqprivatemarket.com/
+  url: https://www.hero.co/
+- type: Documentation
+  url: https://shop.hero.co/agents.md
+- type: Support
+  url: https://www.hero.co/contact
+- type: Blog
+  url: https://www.hero.co/blog
+- type: Pricing
+  url: https://www.hero.co/products
+- type: Login
+  url: https://shop.hero.co/account/login
+- type: TermsOfService
+  url: https://www.hero.co/terms
+- type: PrivacyPolicy
+  url: https://www.hero.co/privacy
+- type: MCPServer
+  url: mcp/hero-bread-mcp.yml
+- type: ToolCrosswalk
+  url: mcp/hero-bread-tool-crosswalk.yml
+- type: LLMsTxt
+  url: llms/hero-bread-llms.txt
+- type: WellKnown
+  url: well-known/hero-bread-well-known.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Authentication
+  url: authentication/hero-bread-authentication.yml
+- type: OAuthScopes
+  url: scopes/hero-bread-scopes.yml
+- type: Conventions
+  url: conventions/hero-bread-conventions.yml
+- type: Idempotency
+  url: conventions/hero-bread-conventions.yml
+- type: ErrorCatalog
+  url: errors/hero-bread-problem-types.yml
+- type: DataModel
+  url: data-model/hero-bread-data-model.yml
+- type: Conformance
+  url: conformance/hero-bread-conformance.yml
+- type: Lifecycle
+  url: lifecycle/hero-bread-lifecycle.yml
+- type: Plans
+  url: plans/hero-bread-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/hero-bread-rate-limits.yml
+- type: Packages
+  url: packages/hero-bread-packages.yml
+- type: DomainSecurity
+  url: security/hero-bread-domain-security.yml
+x-enrichment:
+  date: '2026-08-22'
+  status: enriched
+  artifacts_added: 25
+  pass: local-v1
+x-coverage:
+  state: covered
+  reason: agent-commerce-surface-live
+  detail: >-
+    Hero Bread ships no developer program, but its storefront host shop.hero.co serves a live,
+    anonymously-discoverable UCP merchant profile and an MCP endpoint whose tools/list returned 13
+    real tools with JSON Schema input contracts.
+  evidence:
+  - url: https://shop.hero.co/.well-known/ucp
+    status: 200
+  - url: https://shop.hero.co/api/ucp/mcp
+    status: 200
+  - url: https://shop.hero.co/llms.txt
+    status: 200
+  - url: https://www.hero.co/.well-known/agent-card.json
+    status: 404
+  checked: '2026-08-22'

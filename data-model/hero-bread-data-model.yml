@@ -1,0 +1,39 @@
+generated: '2026-08-22'
+method: derived
+source: mcp/hero-bread-ucp-mcp-tools-list.json
+note: >-
+  Derived from the JSON Schema 2020-12 inputSchemas returned by the live tools/list. There is no
+  OpenAPI, so the tool schemas are the only machine-readable description of the entities.
+entities:
+- name: Product
+  identifier: 'gid://shopify/Product/<id>'
+  tools: [search_catalog, lookup_catalog, get_product]
+  note: Returns variants, exact pricing and real-time availability; supports interactive option selection.
+- name: ProductVariant
+  identifier: 'gid://shopify/ProductVariant/<id>'
+  tools: [lookup_catalog, get_product]
+- name: Cart
+  identifier: opaque id
+  tools: [create_cart, get_cart, update_cart, cancel_cart]
+- name: Checkout
+  identifier: opaque id
+  tools: [create_checkout, get_checkout, update_checkout, complete_checkout, cancel_checkout]
+- name: Order
+  identifier: opaque id
+  tools: [get_order]
+  note: Read-only in this surface — created as a side effect of complete_checkout.
+- name: Money
+  shape: '{amount: integer minor units, currency: ISO 4217 code}'
+  note: Value object embedded throughout; never a standalone resource.
+- name: AgentProfile
+  identifier: https URI
+  field: meta.ucp-agent.profile
+  note: Caller-supplied identity document, required on every tools/call.
+relationships:
+- {from: Product, to: ProductVariant, kind: has_many, via: variants}
+- {from: Cart, to: ProductVariant, kind: has_many, via: line_items}
+- {from: Checkout, to: Cart, kind: belongs_to, via: cart id}
+- {from: Checkout, to: ProductVariant, kind: has_many, via: line_items}
+- {from: Order, to: Checkout, kind: belongs_to, via: complete_checkout result}
+- {from: Checkout, to: Money, kind: has_many, via: totals/taxes/discounts}
+lifecycle_path: search_catalog -> get_product -> create_cart -> update_cart -> create_checkout -> update_checkout -> complete_checkout -> get_order
