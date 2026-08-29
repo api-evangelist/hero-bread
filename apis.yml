@@ -10,6 +10,17 @@ description: >-
   unauthenticated MCP endpoint at /api/ucp/mcp exposing thirteen catalog, cart, checkout and order
   tools — a Shopify platform capability exposed on the merchant's own host against the merchant's
   own catalog.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://cdn.sanity.io/images/85daklna/production/028e6f6b81bdfad5074d500c93636f8f18866203-2000x1670.webp
 url: https://raw.githubusercontent.com/api-evangelist/hero-bread/refs/heads/main/apis.yml
 x-type: company
