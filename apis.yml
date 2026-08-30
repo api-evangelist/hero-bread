@@ -37,6 +37,17 @@ tags:
 - Retail
 - E-Commerce
 - Agent Commerce
+- MCP
+- Universal Commerce Protocol
+- Shopify
+- Direct to Consumer
+tags_raw:
+- Company
+- Food and Beverage
+- Consumer Packaged Goods
+- Retail
+- E-Commerce
+- Agent Commerce
 - Model Context Protocol
 - Universal Commerce Protocol
 - Shopify
@@ -55,6 +66,12 @@ apis:
   humanURL: https://shop.hero.co/agents.md
   baseURL: https://shop.hero.co/api/ucp/mcp
   tags:
+  - Agent Commerce
+  - Catalog
+  - Cart
+  - Checkout
+  - Order
+  tags_raw:
   - Agent Commerce
   - Catalog
   - Cart
