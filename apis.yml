@@ -51,7 +51,7 @@ tags:
 - Consumer Packaged Goods
 - Retail
 - E-Commerce
-- Agent Commerce
+- Agentic Commerce
 - MCP
 - Universal Commerce Protocol
 - Shopify
@@ -81,7 +81,7 @@ apis:
   humanURL: https://shop.hero.co/agents.md
   baseURL: https://shop.hero.co/api/ucp/mcp
   tags:
-  - Agent Commerce
+  - Agentic Commerce
   - Catalog
   - Cart
   - Checkout
