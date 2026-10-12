@@ -1,0 +1,16 @@
+generated: '2026-10-12'
+method: none
+source:
+- https://zapier.com/apps/hero-bread/integrations
+- https://n8n.io/integrations/hero-bread/
+- https://composio.dev/toolkits/hero-bread
+- https://monid.ai/tools/hero-bread
+checked:
+- https://composio.dev/toolkits/hero-bread
+- https://monid.ai/tools/hero-bread
+- https://n8n.io/integrations/hero-bread/
+- https://zapier.com/apps/hero-bread/integrations
+summary: null
+marketplace_apps: []
+edges: []
+templates: []
