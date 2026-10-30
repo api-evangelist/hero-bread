@@ -64,5 +64,116 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Hero Bread is a company surfaced via the API Evangelist harvest backlog (source: secondary-market) and added to the network as a stub for full-pipeline profiling.
-- https://www.nasdaqprivatemarket.com/
+Hero Bread is an American food-technology company that makes low-net-carb, high-fiber, zero-sugar baked goods — sliced breads, tortillas, buns, rolls and bagels — sold direct-to-consumer from hero.co and through grocery and foodservice retail. It is not a developer-tools company and publishes no developer portal, OpenAPI description or API documentation. It does, however, operate a live agent-commerce surface on its own storefront subdomain: shop.hero.co serves an llms.txt and an agents.md, a Universal Commerce Protocol (UCP) merchant profile at /.well-known/ucp, and an unauthenticated MCP endpoint at /api/ucp/mcp exposing thirteen catalog, cart, checkout and order tools — a Shopify platform capability exposed on the merchant's own host against the merchant's own catalog.
+
+**Areas:** Company · Food and Beverage · Consumer Packaged Goods · Retail · E-Commerce · Agentic Commerce · MCP · Universal Commerce Protocol · Shopify · Direct to Consumer
+
+## Hero Bread on APIs.io
+
+Everything profiled for Hero Bread is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/hero-bread/](https://apis.io/providers/hero-bread/)** — or go straight to one of the APIs or properties below.
+
+### APIs (1)
+
+- [Hero Bread Storefront Agent Commerce (UCP/MCP)](https://apis.io/apis/hero-bread/hero-bread-ucp-mcp/) — The agent-facing commerce interface for the Hero Bread online store. An MCP server at https://shop.hero.co/api/ucp/mcp implements the Universal Commerce…
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [hero-bread-mcp.yml](https://apis.io/servers/hero-bread/hero-bread-mcp-yml/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Hero Bread Authentication](https://apis.io/security/hero-bread/hero-bread-authentication/)
+- [Hero Bread Domain Security](https://apis.io/security/hero-bread/hero-bread-domain-security/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Hero Bread Scopes](https://apis.io/scopes/hero-bread/hero-bread-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Hero Bread Plans Pricing](https://apis.io/plans/hero-bread/hero-bread-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Hero Bread Rate Limits](https://apis.io/rate-limits/hero-bread/hero-bread-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.hero.co/)
+- [Documentation](https://shop.hero.co/agents.md)
+- [Pricing](https://www.hero.co/products)
+- [Support](https://www.hero.co/contact)
+- [Blog](https://www.hero.co/blog)
+- [Terms of service](https://www.hero.co/terms)
+- [Privacy policy](https://www.hero.co/privacy)
+
+## API Evangelist rating
+
+**Kin Score 26.3** — thin · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 75.0 |
+| Contract quality | 0.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 0.0 |
+| Developer ergonomics | 30.4 |
+| Access clarity | 38.2 |
+
+**Agent readiness 27.0** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | platform (partial credit) |
+| Auth Clarity | served (partial credit) |
+| Idempotency | documented (partial credit) |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | verified |
+| Dynamic Client Registration | — |
+| Agentic Commerce | platform (partial credit) |
+| Pagination Ratio | na |
+| Operation Distinctiveness | na |
+
+**Regulatory alignment 34.3** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/hero-bread/](https://apis.io/providers/hero-bread/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Hero Bread: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/hero-bread/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
